@@ -10,5 +10,4 @@ class CycleOrmBundle extends Bundle
     {
         return \dirname(__DIR__);
     }
-
 }

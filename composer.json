@@ -17,8 +17,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=8.1",
-        "cycle/orm": "2.x-dev",
-        "cycle/schema-renderer": "1.x-dev",
-        "symfony/framework-bundle": "6.2.x-dev"
+        "cycle/orm": "^2.2",
+        "cycle/schema-renderer": "^1.1",
+        "symfony/framework-bundle": "6.1.*"
     }
 }

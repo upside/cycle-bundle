@@ -1,0 +1,24 @@
+{
+    "name": "upside/cycle-orm-bundle",
+    "description": "Symfony CycleOrmBundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Upside\\CycleOrmBundle\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "upside",
+            "email": "upside89@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=8.1",
+        "cycle/orm": "2.x-dev",
+        "cycle/schema-renderer": "1.x-dev",
+        "symfony/framework-bundle": "6.2.x-dev"
+    }
+}

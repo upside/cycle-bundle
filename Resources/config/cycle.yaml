@@ -1,4 +1,0 @@
-cycle_orm:
-    dbal:
-        url: '%env(resolve:DATABASE_URL)%'
-    orm:

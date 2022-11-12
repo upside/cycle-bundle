@@ -24,6 +24,7 @@ class CycleOrmExtension extends Extension
 
     private function prepareDatabaseConfig(array $configs, ContainerBuilder $container): void
     {
-        $container->getDefinition(DatabaseConfig::class)->replaceArgument(0, $configs['dbal']);
+        dump($configs);
+        $container->getDefinition(DatabaseConfig::class)->replaceArgument(0, $configs);
     }
 }

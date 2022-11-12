@@ -15,15 +15,18 @@ class CycleOrmExtension extends Extension
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.php');
 
-        // $configuration = $this->getConfiguration($configs, $container);
+        $configuration = $this->getConfiguration($configs, $container);
 
-        // $config = $this->processConfiguration($configuration, $configs);
+        //$config = $this->processConfiguration($configuration, $configs);
+
+        dump($configuration);
 
         $this->prepareDatabaseConfig($configs, $container);
     }
 
     private function prepareDatabaseConfig(array $configs, ContainerBuilder $container): void
     {
+        dump($configs);
         $container->getDefinition(DatabaseConfig::class)->replaceArgument(0, $configs[0]['dbal']);
     }
 }

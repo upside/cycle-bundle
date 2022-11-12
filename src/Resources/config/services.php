@@ -12,8 +12,10 @@ return static function (ContainerConfigurator $container) {
         ->set(DatabaseConfig::class)
             ->args([abstract_arg('Cycle database config')])
         ->set(DatabaseManager::class)
+            ->autowire()
         ->set(ORM::class)
             ->arg('$schema', abstract_arg('Cycle orm schema'))
+            ->autowire()
 
     ;
 };

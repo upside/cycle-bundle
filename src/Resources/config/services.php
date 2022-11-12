@@ -10,6 +10,7 @@ return static function (ContainerConfigurator $container) {
     $container
         ->services()
         ->set(DatabaseConfig::class)
+            ->factory()
             ->args([abstract_arg('Cycle database config')])
         ->set(DatabaseManager::class)
             ->autowire()

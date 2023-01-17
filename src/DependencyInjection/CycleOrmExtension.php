@@ -3,6 +3,7 @@
 namespace Upside\CycleOrmBundle\DependencyInjection;
 
 use Cycle\Database\Config\DatabaseConfig;
+use Exception;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -10,22 +11,26 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 class CycleOrmExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    /**
+     * @param array $configs
+     * @param ContainerBuilder $container
+     * @return void
+     * @throws Exception
+     */
+    public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.php');
 
         $configuration = $this->getConfiguration($configs, $container);
 
-        //$config = $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
 
-        dump($configuration);
-
-        $this->prepareDatabaseConfig($configs, $container);
+        $this->prepareDatabaseConfig($config['dbal'], $container);
     }
 
-    private function prepareDatabaseConfig(array $configs, ContainerBuilder $container): void
+    private function prepareDatabaseConfig(array $config, ContainerBuilder $container): void
     {
-        $container->getDefinition(DatabaseConfig::class)->replaceArgument(0, $configs[0]['dbal']);
+        $container->getDefinition(DatabaseConfig::class)->replaceArgument(0, $config);
     }
 }

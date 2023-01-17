@@ -41,6 +41,7 @@ class Configuration implements ConfigurationInterface
                                                     ->scalarNode('user')->end()
                                                     ->scalarNode('password')->end()
                                                     ->arrayNode('options')->end()
+                                                    ->scalarNode('charset')->end()
                                                 ->end()
                                             ->end()
                                         ->end()

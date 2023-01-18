@@ -2,6 +2,7 @@
 
 use Cycle\Database\Config\DatabaseConfig;
 use Cycle\Database\DatabaseManager;
+use Cycle\ORM\EntityManager;
 use Cycle\ORM\ORM;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Upside\CycleOrmBundle\DatabaseConfigFactory;
@@ -17,6 +18,8 @@ return static function (ContainerConfigurator $container) {
             ->autowire()
         ->set(ORM::class)
             ->arg('$schema', abstract_arg('Cycle orm schema'))
+            ->autowire()
+        ->set(EntityManager::class)
             ->autowire()
     ;
 };

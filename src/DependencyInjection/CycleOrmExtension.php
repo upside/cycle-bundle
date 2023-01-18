@@ -33,11 +33,11 @@ class CycleOrmExtension extends Extension
 
     private function prepareDatabaseConfig(array $config, ContainerBuilder $container): void
     {
-        $container->getDefinition(DatabaseConfig::class)->replaceArgument(0, $config);
+        $container->getDefinition(DatabaseConfig::class)->replaceArgument('$config', $config);
     }
 
     private function prepareSchemeConfig(array $config, ContainerBuilder $container): void
     {
-        $container->getDefinition(Schema::class)->replaceArgument(0, $config);
+        $container->getDefinition(Schema::class)->replaceArgument('$config', $config);
     }
 }

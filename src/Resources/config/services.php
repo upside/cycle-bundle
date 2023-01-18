@@ -1,15 +1,7 @@
 <?php
 
-use Cycle\Database\Config\DatabaseConfig;
-use Cycle\Database\DatabaseManager;
-use Cycle\Database\DatabaseProviderInterface;
-use Cycle\ORM\EntityManager;
-use Cycle\ORM\Factory;
-use Cycle\ORM\FactoryInterface;
-use Cycle\ORM\ORM;
-use Cycle\ORM\ORMInterface;
-use Cycle\ORM\Schema;
-use Cycle\ORM\SchemaInterface;
+use Cycle\Database;
+use Cycle\ORM;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Upside\CycleOrmBundle\DatabaseConfigFactory;
 use Upside\CycleOrmBundle\SchemaFactory;
@@ -17,26 +9,32 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\abstract_
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container) {
-    $container
-        ->services()
-        ->set(DatabaseConfig::class)
-            ->args([abstract_arg('Cycle database config')])
-            ->factory([DatabaseConfigFactory::class, 'create'])
-        ->set(DatabaseManager::class)
-            ->autowire()
-        ->alias(DatabaseProviderInterface::class, service(DatabaseManager::class))
-        ->set(Factory::class)
-            ->autowire()
-        ->alias(FactoryInterface::class, service(Factory::class))
-        ->set(Schema::class)
-            ->args([abstract_arg('Cycle orm schema config')])
-            ->factory([SchemaFactory::class, 'create'])
-            ->autowire()
-        ->alias(SchemaInterface::class, service(Schema::class))
-        ->set(ORM::class)
-            ->autowire()
-        ->alias(ORMInterface::class, service(ORM::class))
-        ->set(EntityManager::class)
-            ->autowire()
-    ;
+
+    $services = $container->services();
+
+    $services
+        ->set(Database\Config\DatabaseConfig::class)
+        ->args([abstract_arg('Cycle database config')])
+        ->factory([DatabaseConfigFactory::class, 'create']);
+    $services
+        ->set(Database\DatabaseManager::class)
+        ->autowire()
+        ->alias(Database\DatabaseProviderInterface::class, service(Database\DatabaseManager::class));
+
+
+    $services->set(ORM\Factory::class)
+        ->autowire()
+        ->alias(ORM\FactoryInterface::class, service(ORM\Factory::class));
+    $services->set(ORM\Schema::class)
+        ->args([abstract_arg('Cycle orm schema config')])
+        ->factory([SchemaFactory::class, 'create'])
+        ->autowire()
+        ->alias(ORM\SchemaInterface::class, service(ORM\Schema::class));
+    $services
+        ->set(ORM\ORM::class)
+        ->autowire()
+        ->alias(ORM\ORMInterface::class, service(ORM\ORM::class));
+    $services
+        ->set(ORM\EntityManager::class)
+        ->autowire();
 };

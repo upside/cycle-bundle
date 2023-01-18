@@ -2,16 +2,12 @@
 
 namespace Upside\CycleOrmBundle\DependencyInjection\Compiler;
 
-use Cycle\Annotated\Embeddings;
-use Cycle\Annotated\Entities;
 use Cycle\Database\DatabaseManager;
-use Cycle\Schema;
-use Spiral\Tokenizer\ClassLocator;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Finder\Finder;
 use Upside\CycleOrmBundle\DependencyInjection\Configuration;
+use Upside\CycleOrmBundle\SchemaCompiler;
 
 class SchemaCompilerPass implements CompilerPassInterface
 {
@@ -30,37 +26,17 @@ class SchemaCompilerPass implements CompilerPassInterface
             $parameterBag->resolveValue($container->getExtensionConfig('cycle_orm'))
         );
 
-        $schema = $this->compile(
-            $container,
+        /** @var DatabaseManager $databaseManager */
+        $databaseManager = $container->get(DatabaseManager::class);
+
+        $schemaCompiler = new SchemaCompiler(
+            $databaseManager,
             $configs['orm']['entityPaths'],
             $configs['orm']['compileGenerators']
         );
 
+        $schema = $schemaCompiler->compile();
+
         file_put_contents($configs['orm']['schemaCachePath'], '<?php return ' . var_export($schema, true) . ';');
-    }
-
-    private function compile(ContainerBuilder $container, array $entityPaths, array $generatorClasses): array
-    {
-        $finder = new Finder();
-        $databaseManager = $container->get(DatabaseManager::class);
-
-
-        if (null === $databaseManager) {
-            throw new \RuntimeException('databaseManager not found');
-        }
-
-        $finder = $finder->files()->in($entityPaths);
-        $classLocator = new ClassLocator($finder);
-
-        $generators = [];
-        foreach ($generatorClasses as $generatorClass) {
-            if ($generatorClass === Embeddings::class || $generatorClass === Entities::class) {
-                $generators[] = new $generatorClass($classLocator);
-                continue;
-            }
-            $generators[] = new $generatorClass();
-        }
-
-        return (new Schema\Compiler())->compile(new Schema\Registry($databaseManager), $generators);
     }
 }

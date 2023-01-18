@@ -26,6 +26,10 @@ class SchemaCompilerPass implements CompilerPassInterface
             $parameterBag->resolveValue($container->getExtensionConfig('cycle_orm'))
         );
 
+        if (!$configs['orm']['schemaCache']) {
+            return;
+        }
+
         /** @var DatabaseManager $databaseManager */
         $databaseManager = $container->get(DatabaseManager::class);
 

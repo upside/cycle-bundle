@@ -52,6 +52,7 @@ class Configuration implements ConfigurationInterface
                                         ->booleanNode('queryCache')->end()
                                         ->booleanNode('readonlySchema')->end()
                                         ->booleanNode('readonly')->end()
+                                        ->arrayNode('options')->end()
                                     ->end()
                                 ->end()
                             ->end()

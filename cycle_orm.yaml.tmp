@@ -1,0 +1,95 @@
+cycle_orm:
+  dbal:
+    default: 'default'
+    aliases: [ ]
+    databases:
+      default:
+        connection: 'mysql_tcp'
+    connections:
+      mysql_dsn:
+        Cycle\Database\Config\MySQLDriverConfig:
+          connection:
+            Cycle\Database\Config\MySQL\DsnConnectionConfig:
+              dsn: ''
+              user: ''
+              password: ''
+              options: [ ]
+      mysql_socket:
+        Cycle\Database\Config\MySQLDriverConfig:
+          connection:
+            Cycle\Database\Config\MySQL\SocketConnectionConfig:
+              database: ''
+              socket: ''
+              charset: ''
+              user: ''
+              password: ''
+              options: [ ]
+      mysql_tcp:
+        Cycle\Database\Config\MySQLDriverConfig:
+          connection:
+            Cycle\Database\Config\MySQL\TcpConnectionConfig:
+              database: ''
+              host: '127.0.0.1'
+              port: 3306
+              charset: 'utf8mb4'
+              user: 'root'
+              password: ''
+              options: [ ]
+          driver: Cycle\Database\Driver\MySQL\MySQLDriver
+          reconnect: true
+          timezone: 'UTC'
+          queryCache: true
+          readonlySchema: false
+          readonly: false
+          options: [ ]
+      postgres_dsn:
+        Cycle\Database\Config\PostgresDriverConfig:
+          connection:
+            Cycle\Database\Config\Postgres\DsnConnectionConfig:
+              dsn: ''
+              user: ''
+              password: ''
+              options: [ ]
+      postgres_tcp:
+        Cycle\Database\Config\PostgresDriverConfig:
+          connection:
+            Cycle\Database\Config\Postgres\TcpConnectionConfig:
+              database: ''
+              host: '127.0.0.1'
+              port: 5432
+              user: ''
+              password: ''
+              options: [ ]
+          schema: 'public'
+          driver: Cycle\Database\Driver\Postgres\PostgresDriver
+          reconnect: true
+          timezone: 'UTC'
+          queryCache: true
+          readonlySchema: false
+          readonly: false
+      sqlite_dsn:
+      sqlite_file:
+      sqlite_memory:
+      sqlite_temp_file:
+      sqlsrv_dsn:
+      sqlsrv_tcp:
+  orm:
+    schemaCache: true
+    schemaCachePath: '%kernel.cache_dir%/cycle_schema.php'
+    entityPaths:
+      - '%kernel.project_dir%/src/CycleEntity'
+    compileGenerators:
+      - Cycle\Schema\Generator\ResetTables       # re-declared table schemas (remove columns)
+      - Cycle\Annotated\Embeddings               # register embeddable entities
+      - Cycle\Annotated\Entities                 # register annotated entities
+      - Cycle\Annotated\TableInheritance         # register STI/JTI
+      - Cycle\Annotated\MergeColumns             # add @Table column declarations
+      - Cycle\Schema\Generator\GenerateRelations # generate entity relations
+      - Cycle\Schema\Generator\GenerateModifiers # generate changes from schema modifiers
+      - Cycle\Schema\Generator\ValidateEntities  # make sure all entity schemas are correct
+      - Cycle\Schema\Generator\RenderTables      # declare table schemas
+      - Cycle\Schema\Generator\RenderRelations   # declare relation keys and indexes
+      - Cycle\Schema\Generator\RenderModifiers   # render all schema modifiers
+      - Cycle\Annotated\MergeIndexes             # add @Table column declarations
+      - Cycle\Schema\Generator\SyncTables        # sync table changes to database
+      - Cycle\Schema\Generator\GenerateTypecast  # typecast non string columns

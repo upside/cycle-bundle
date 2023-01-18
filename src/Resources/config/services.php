@@ -14,7 +14,7 @@ return static function (ContainerConfigurator $container) {
 
     $services
         ->set(Database\Config\DatabaseConfig::class)
-        ->args([abstract_arg('Cycle database config')])
+        ->arg('$config', abstract_arg('Cycle database config'))
         ->factory([DatabaseConfigFactory::class, 'create']);
     $services
         ->set(Database\DatabaseManager::class)
@@ -26,7 +26,7 @@ return static function (ContainerConfigurator $container) {
         ->autowire()
         ->alias(ORM\FactoryInterface::class, service(ORM\Factory::class));
     $services->set(ORM\Schema::class)
-        ->args([abstract_arg('Cycle orm schema config')])
+        ->arg('$config', abstract_arg('Cycle orm schema config'))
         ->factory([SchemaFactory::class, 'create'])
         ->autowire()
         ->alias(ORM\SchemaInterface::class, service(ORM\Schema::class));

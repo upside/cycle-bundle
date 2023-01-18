@@ -3,6 +3,8 @@
 use Cycle\Database\Config\DatabaseConfig;
 use Cycle\Database\DatabaseManager;
 use Cycle\ORM\EntityManager;
+use Cycle\ORM\Factory;
+use Cycle\ORM\FactoryInterface;
 use Cycle\ORM\ORM;
 use Cycle\ORM\ORMInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -18,6 +20,9 @@ return static function (ContainerConfigurator $container) {
             ->factory([DatabaseConfigFactory::class, 'create'])
         ->set(DatabaseManager::class)
             ->autowire()
+        ->set(Factory::class)
+            ->autowire()
+        ->alias(FactoryInterface::class, service(Factory::class))
         ->set(ORM::class)
             ->arg('$schema', abstract_arg('Cycle orm schema'))
             ->autowire()

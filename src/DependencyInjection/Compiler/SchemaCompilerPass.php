@@ -36,7 +36,7 @@ class SchemaCompilerPass implements CompilerPassInterface
             $configs['orm']['compileGenerators']
         );
 
-        dd($schema);
+        file_put_contents($configs['orm']['schemaCachePath'], '<?php return ' . var_export($schema, true) . ';');
     }
 
     private function compile(ContainerBuilder $container, array $entityPaths, $generatorClasses): array

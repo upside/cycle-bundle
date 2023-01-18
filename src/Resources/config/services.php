@@ -8,6 +8,7 @@ use Cycle\ORM\ORMInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Upside\CycleOrmBundle\DatabaseConfigFactory;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\abstract_arg;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container) {
     $container
@@ -17,9 +18,10 @@ return static function (ContainerConfigurator $container) {
             ->factory([DatabaseConfigFactory::class, 'create'])
         ->set(DatabaseManager::class)
             ->autowire()
-        ->set(ORMInterface::class, ORM::class)
+        ->set(ORM::class)
             ->arg('$schema', abstract_arg('Cycle orm schema'))
             ->autowire()
+        ->alias(ORMInterface::class, service(ORM::class))
         ->set(EntityManager::class)
             ->autowire()
     ;

@@ -14,9 +14,8 @@ class DatabaseConfigFactory
             $connectionConfigClass = array_key_first($connection[$driverConfigClass]['connection']);
             $connection[$driverConfigClass]['connection'] = new $connectionConfigClass(...$connection[$driverConfigClass]['connection'][$connectionConfigClass]);
 
-            dump($connection, $driverConfigClass, $connectionConfigClass);
-
             return new $driverConfigClass(...$connection[$driverConfigClass]);
+
         }, $config['connections']);
 
         return new DatabaseConfig($config);

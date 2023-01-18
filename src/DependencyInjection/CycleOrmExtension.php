@@ -3,6 +3,7 @@
 namespace Upside\CycleOrmBundle\DependencyInjection;
 
 use Cycle\Database\Config\DatabaseConfig;
+use Cycle\ORM\Schema;
 use Exception;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -27,10 +28,16 @@ class CycleOrmExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $this->prepareDatabaseConfig($config['dbal'], $container);
+        $this->prepareSchemeConfig($config['orm'], $container);
     }
 
     private function prepareDatabaseConfig(array $config, ContainerBuilder $container): void
     {
         $container->getDefinition(DatabaseConfig::class)->replaceArgument(0, $config);
+    }
+
+    private function prepareSchemeConfig(array $config, ContainerBuilder $container): void
+    {
+        $container->getDefinition(Schema::class)->replaceArgument(0, $config);
     }
 }

@@ -39,7 +39,7 @@ class SchemaCompilerPass implements CompilerPassInterface
         file_put_contents($configs['orm']['schemaCachePath'], '<?php return ' . var_export($schema, true) . ';');
     }
 
-    private function compile(ContainerBuilder $container, array $entityPaths, $generatorClasses): array
+    private function compile(ContainerBuilder $container, array $entityPaths, array $generatorClasses): array
     {
         $finder = new Finder();
         $databaseManager = $container->get(DatabaseManager::class);

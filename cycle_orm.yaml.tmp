@@ -11,8 +11,8 @@ cycle_orm:
           connection:
             Cycle\Database\Config\MySQL\DsnConnectionConfig:
               dsn: ''
-              user: ''
-              password: ''
+              user: ~
+              password: ~
               options: [ ]
       mysql_socket:
         Cycle\Database\Config\MySQLDriverConfig:
@@ -20,20 +20,20 @@ cycle_orm:
             Cycle\Database\Config\MySQL\SocketConnectionConfig:
               database: ''
               socket: ''
-              charset: ''
-              user: ''
-              password: ''
+              charset: ~
+              user: ~
+              password: ~
               options: [ ]
       mysql_tcp:
         Cycle\Database\Config\MySQLDriverConfig:
           connection:
             Cycle\Database\Config\MySQL\TcpConnectionConfig:
-              database: ''
+              database: 'desert'
               host: '127.0.0.1'
               port: 3306
-              charset: 'utf8mb4'
-              user: 'root'
-              password: ''
+              charset: ~
+              user: ~
+              password: ~
               options: [ ]
           driver: Cycle\Database\Driver\MySQL\MySQLDriver
           reconnect: true
@@ -47,18 +47,18 @@ cycle_orm:
           connection:
             Cycle\Database\Config\Postgres\DsnConnectionConfig:
               dsn: ''
-              user: ''
-              password: ''
+              user: ~
+              password: ~
               options: [ ]
       postgres_tcp:
         Cycle\Database\Config\PostgresDriverConfig:
           connection:
             Cycle\Database\Config\Postgres\TcpConnectionConfig:
-              database: ''
+              database: 'desert'
               host: '127.0.0.1'
               port: 5432
-              user: ''
-              password: ''
+              user: ~
+              password: ~
               options: [ ]
           schema: 'public'
           driver: Cycle\Database\Driver\Postgres\PostgresDriver
@@ -68,11 +68,57 @@ cycle_orm:
           readonlySchema: false
           readonly: false
       sqlite_dsn:
+        Cycle\Database\Config\SQLiteDriverConfig:
+          connection:
+            Cycle\Database\Config\SQLite\DsnConnectionConfig:
+              dsn: ''
+              options: [ ]
       sqlite_file:
+        Cycle\Database\Config\SQLiteDriverConfig:
+          connection:
+            Cycle\Database\Config\SQLite\FileConnectionConfig:
+              database: ''
+              options: [ ]
       sqlite_memory:
+        Cycle\Database\Config\SQLiteDriverConfig:
+          connection:
+            Cycle\Database\Config\SQLite\MemoryConnectionConfig:
+              options: [ ]
       sqlite_temp_file:
-      sqlsrv_dsn:
-      sqlsrv_tcp:
+        Cycle\Database\Config\SQLiteDriverConfig:
+          connection:
+            Cycle\Database\Config\SQLite\TempFileConnectionConfig:
+              options: [ ]
+      sql_server_dsn:
+        Cycle\Database\Config\SQLServerDriverConfig:
+          connection:
+            Cycle\Database\Config\SQLServer\DsnConnectionConfig:
+              dsn: ''
+              user: ~
+              password: ~
+              options: [ ]
+      sql_server_tcp:
+        Cycle\Database\Config\SQLServerDriverConfig:
+          connection:
+            Cycle\Database\Config\SQLServer\TcpConnectionConfig:
+              database: ''
+              host: ''
+              port: 1433
+              app: ~
+              pooling: ~
+              encrypt: ~
+              failover: ~
+              timeout: ~
+              mars: ~
+              quoted: ~
+              traceFile: ~
+              trace: ~
+              isolation: ~
+              trustServerCertificate: ~
+              wsid: ~
+              user: ~
+              password: ~
+              options: [ ]
   orm:
     schemaCache: true
     schemaCachePath: '%kernel.cache_dir%/cycle_schema.php'

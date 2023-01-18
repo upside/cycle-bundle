@@ -2,6 +2,7 @@
 
 use Cycle\Database\Config\DatabaseConfig;
 use Cycle\Database\DatabaseManager;
+use Cycle\Database\DatabaseProviderInterface;
 use Cycle\ORM\EntityManager;
 use Cycle\ORM\Factory;
 use Cycle\ORM\FactoryInterface;
@@ -20,6 +21,7 @@ return static function (ContainerConfigurator $container) {
             ->factory([DatabaseConfigFactory::class, 'create'])
         ->set(DatabaseManager::class)
             ->autowire()
+        ->alias(DatabaseProviderInterface::class, service(DatabaseManager::class))
         ->set(Factory::class)
             ->autowire()
         ->alias(FactoryInterface::class, service(Factory::class))
